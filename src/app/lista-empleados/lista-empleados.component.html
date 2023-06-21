@@ -11,9 +11,10 @@
         <tr *ngFor="let empleado of empleados">
             <td>{{empleado.nombre}} </td>
             <td>{{empleado.telefono}}</td>
-            <td><button type="button" class="btn btn-info">Editar</button> - <button type="button"
-                    class="btn btn-danger">Eliminar</button>-
-                <button type="button" class="btn btn-primary">Detalles</button>
+            <td>
+                <button  (click) = "actualizarEmpleado(empleado.id)" class="btn btn-info">Editar</button>  
+                <button  (click)="eliminarEmpleado(empleado.id)"   class="btn btn-danger" style="margin-left : 10px">Eliminar</button>-
+                <button  class="btn btn-primary">Detalles</button>
             </td>
         </tr>
     </tbody>

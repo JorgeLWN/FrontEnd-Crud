@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Empleado } from '../empleado';
+import { EmpleadoService } from '../empleado.service';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-lista-empleados',
@@ -10,19 +13,27 @@ export class ListaEmpleadosComponent {
 
   empleados:Empleado[];
 
-  constructor() { }
+  constructor(private empleadoServicio:EmpleadoService, private router:Router ){ }
 
   ngOnInit(): void {
-    this.empleados = [{
-      "id":1,
-      "nombre":"Soriano",
-      "telefono" : "5543322345"
-    },
-    {
-      "id":2,
-      "nombre":"Juanito",
-      "telefono" : "5578982345"
-    }];
+      this.obtenerEmpleados();
+  }
+
+  actualizarEmpleado(id:number){
+    this.router.navigate(['actualizar-empleado',id]);
+  }
+
+  eliminarEmpleado(id:number){
+    this.empleadoServicio.eliminarEmpleado(id).subscribe(dato =>{
+      console.log(dato);
+      this.obtenerEmpleados();
+    })
+  }
+
+  private obtenerEmpleados(){
+    this.empleadoServicio.obtenerListaDeEmpleados().subscribe(dato =>{
+      this.empleados = dato;
+    })
   }
 
 }
